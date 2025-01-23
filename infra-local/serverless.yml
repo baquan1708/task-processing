@@ -29,12 +29,16 @@ custom:
       - topic:
           topicName: CqrsSnsTopic
           rawMessageDelivery: 'true'
-          filterPolicy: { 'action': [ 'task-execute' ] }
+          filterPolicy: { 'action': ['task-execute'] }
         queue: http://localhost:9324/101010101010/task-action-queue
       - topic:
           topicName: CqrsSnsTopic
           rawMessageDelivery: 'true'
-          filterPolicy: { 'action': [ 'notification-action', 'command-status', 'task-status' ] }
+          filterPolicy:
+            {
+              'action':
+                ['notification-action', 'command-status', 'task-status'],
+            }
         queue: http://localhost:9324/101010101010/notification-queue
       - topic:
           topicName: AlarmSnsTopic
@@ -148,12 +152,50 @@ functions:
           maximumRetryAttempts: 10
           arn: ${env:LOCAL_DDB_SAMPLE_STREAM}
           filterPatterns:
-            - eventName: [ INSERT ]
+            - eventName: [INSERT]
+      - stream:
+          type: dynamodb
+          maximumRetryAttempts: 10
+          arn: ${env:LOCAL_DDB_TASKS_STREAM}
+          filterPatterns:
+            - eventName: [INSERT]
 
 stepFunctions:
   # https://goessner.net/articles/JsonPath/index.html
   # https://docs.aws.amazon.com/step-functions/latest/dg/concepts-input-output-filtering.html
   stateMachines:
+    task:
+      name: task
+      definition:
+        Comment: 'An example of the Amazon States Language using wait states'
+        StartAt: map
+        States:
+          map:
+            Type: Map
+            MaxConcurrency: 2
+            ItemsPath: $
+            Iterator:
+              StartAt: iteration
+              States:
+                iteration:
+                  Type: Task
+                  Resource: arn:aws:states:::lambda:invoke
+                  Parameters:
+                    FunctionName: arn:aws:lambda:ap-northeast-1:101010101010:function:serverless-example-dev-main
+                    Payload:
+                      input.$: $
+                      context.$: $$
+                  Retry:
+                    - ErrorEquals:
+                        - Lambda.ServiceException
+                        - Lambda.AWSLambdaException
+                        - Lambda.SdkClientException
+                      IntervalSeconds: 2
+                      MaxAttempts: 5
+                      BackoffRate: 2
+                  End: true
+            End: true
+            # MaxConcurrency: 2
     command:
       name: command
       definition:

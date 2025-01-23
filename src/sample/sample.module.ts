@@ -1,5 +1,6 @@
 import { CommandModule } from '@mbc-cqrs-serverless/core'
 import { Module } from '@nestjs/common'
+import { MyTaskModule } from 'src/my-task/my-task.module'
 
 import { SampleDataSyncRdsHandler } from './handler/sample-rds.handler'
 import { SampleController } from './sample.controller'
@@ -11,6 +12,7 @@ import { SampleService } from './sample.service'
       tableName: 'sample',
       dataSyncHandlers: [SampleDataSyncRdsHandler],
     }),
+    MyTaskModule,
   ],
   controllers: [SampleController],
   providers: [SampleService],

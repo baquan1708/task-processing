@@ -6,6 +6,7 @@ import {
   INVOKE_CONTEXT,
   SearchDto,
 } from '@mbc-cqrs-serverless/core'
+import { TaskService } from '@mbc-cqrs-serverless/task'
 import {
   Body,
   Controller,
@@ -33,6 +34,7 @@ export class SampleController {
     private readonly commandService: CommandService,
     private readonly dataService: DataService,
     private readonly sampleService: SampleService,
+    private readonly taskService: TaskService,
   ) {}
 
   @Post('/')
@@ -45,6 +47,14 @@ export class SampleController {
     const item = await this.commandService.publishAsync(sampleDto, {
       invokeContext,
     })
+    await this.taskService.createTask(
+      {
+        input: item,
+        taskType: 'test',
+        tenantCode: 'mbc',
+      },
+      { invokeContext },
+    )
     return new SampleDataEntity(item as SampleDataEntity)
   }
 
