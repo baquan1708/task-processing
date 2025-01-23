@@ -19,7 +19,10 @@ export class TestTaskEventHandler implements IEventHandler<TestTaskEvent> {
     private readonly sfnService: StepFunctionService,
     private readonly configService: ConfigService,
   ) {
-    this.sfnTaskArn = this.configService.get<string>('SFN_TASK_ARN', '')
+    this.sfnTaskArn = this.configService.get<string>(
+      'SFN_EMPLOYEE_IMPORT_ARN',
+      '',
+    )
   }
 
   async execute(event: TestTaskEvent): Promise<any> {
@@ -32,7 +35,7 @@ export class TestTaskEventHandler implements IEventHandler<TestTaskEvent> {
     await this.sfnService.startExecution(
       this.sfnTaskArn,
 
-      { pk: 'mbc', sk: '1', attrs: { key: 'value1' } },
+      [{ pk: 'mbc', sk: '1', attrs: { key: 'value1' } }],
 
       'test' + Math.random() * 10000,
     )

@@ -31,7 +31,7 @@ export class CustomEventFactory extends EventFactoryAddedTask {
     event: StepFunctionsEvent<any>,
   ): Promise<IEvent[]> {
     console.log('@$@#$@#$@', event)
-    if (event.context.StateMachine.Name.includes('task')) {
+    if (event.context.StateMachine.Name.includes('employee-import')) {
       console.log('@$#$@#$@!#$!@$#TASK@#$@#$')
       return []
     }
