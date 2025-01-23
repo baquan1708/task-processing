@@ -35,7 +35,14 @@ export class TestTaskEventHandler implements IEventHandler<TestTaskEvent> {
     await this.sfnService.startExecution(
       this.sfnTaskArn,
 
-      [{ pk: 'mbc', sk: '1', attrs: { key: 'value1' } }],
+      [
+        { pk: 'mbc', sk: '1', attrs: { key: 'value1' } },
+        { pk: 'mbc', sk: '1', attrs: { key: 'value2' } },
+        { pk: 'mbc', sk: '1', attrs: { key: 'value3' } },
+        { pk: 'mbc', sk: '1', attrs: { key: 'value4' } },
+        { pk: 'mbc', sk: '1', attrs: { key: 'value5' } },
+        { pk: 'mbc', sk: '1', attrs: { key: 'value6' } },
+      ],
 
       'test' + Math.random() * 10000,
     )
