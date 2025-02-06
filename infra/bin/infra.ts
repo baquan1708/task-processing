@@ -9,8 +9,8 @@ import { CdkGraphDiagramPlugin } from '@aws/pdk/cdk-graph-plugin-diagram'
   const app = new cdk.App()
 
   const cdkEnv: cdk.Environment = {
-    account: '',
-    region: '',
+    account: '465316005105',
+    region: 'ap-northeast-1',
   }
 
   const envs: Env[] = ['dev']

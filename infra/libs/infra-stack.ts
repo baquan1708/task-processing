@@ -33,6 +33,7 @@ export class InfraStack extends cdk.Stack {
   public readonly httpApiUrl: cdk.CfnOutput
   public readonly stateMachineArn: cdk.CfnOutput
   public readonly httpDistributionDomain: cdk.CfnOutput
+  public readonly sfnTaskStateMachineArn: cdk.CfnOutput
 
   constructor(scope: Construct, id: string, props: InfraStackProps) {
     super(scope, id, props)
@@ -322,6 +323,17 @@ export class InfraStack extends cdk.Stack {
       arnFormat: cdk.ArnFormat.COLON_RESOURCE_NAME,
     })
 
+    const taskStateMachineName = prefix + 'sfn-task-handler'
+    const taskSfnArn = cdk.Arn.format({
+      partition: 'aws',
+      region: this.region,
+      account: this.account,
+      service: 'states',
+      resource: 'stateMachine',
+      resourceName: taskStateMachineName,
+      arnFormat: cdk.ArnFormat.COLON_RESOURCE_NAME,
+    })
+
     // Lambda api ( arm64 )
     const execEnv = {
       NODE_OPTIONS: '--enable-source-maps',
@@ -333,6 +345,7 @@ export class InfraStack extends cdk.Stack {
       ATTRIBUTE_LIMIT_SIZE: '389120',
       S3_BUCKET_NAME: ddbBucket.bucketName,
       SFN_COMMAND_ARN: commandSfnArn,
+      SFN_TASK_ARN: taskSfnArn,
       SNS_TOPIC_ARN: mainSns.topicArn,
       SNS_ALARM_TOPIC_ARN: alarmSns.topicArn,
       COGNITO_USER_POOL_ID: userPool.userPoolId,
@@ -735,7 +748,7 @@ export class InfraStack extends cdk.Stack {
       cdk.aws_stepfunctions.IntegrationPattern.REQUEST_RESPONSE,
     )
 
-    const sfnLogGroup = new cdk.aws_logs.LogGroup(
+    const commandSfnLogGroup = new cdk.aws_logs.LogGroup(
       this,
       'command-handler-sfn-log',
       {
@@ -756,7 +769,7 @@ export class InfraStack extends cdk.Stack {
           cdk.aws_stepfunctions.DefinitionBody.fromChainable(sfnDefinition),
         tracingEnabled: true,
         logs: {
-          destination: sfnLogGroup,
+          destination: commandSfnLogGroup,
           level: cdk.aws_stepfunctions.LogLevel.ALL, // Log level (ALL, ERROR, or FATAL)
         },
       },
@@ -766,6 +779,58 @@ export class InfraStack extends cdk.Stack {
     this.stateMachineArn = new cdk.CfnOutput(this, 'StateMachineArn', {
       value: stateMachine.stateMachineArn,
     })
+
+    //
+    const invokeLambdaSfnTask = lambdaInvoke(
+      'iterator',
+      null,
+      cdk.aws_stepfunctions.IntegrationPattern.REQUEST_RESPONSE,
+    )
+
+    const sfnTaskMapState = new cdk.aws_stepfunctions.Map(
+      this,
+      'TaskMapState',
+      {
+        stateName: 'map_state',
+        maxConcurrency: 2,
+        inputPath: '$',
+        itemsPath: cdk.aws_stepfunctions.JsonPath.stringAt('$'),
+      },
+    ).itemProcessor(invokeLambdaSfnTask)
+
+    const taskSfnLogGroup = new cdk.aws_logs.LogGroup(
+      this,
+      'task-handler-sfn-log',
+      {
+        logGroupName: `/aws/vendedlogs/states/${prefix}-task-handler-state-machine-Logs`, // Specify a log group name
+        removalPolicy: cdk.RemovalPolicy.DESTROY, // Policy for log group removal
+        retention: cdk.aws_logs.RetentionDays.SIX_MONTHS,
+      },
+    )
+
+    const taskStateMachine = new cdk.aws_stepfunctions.StateMachine(
+      this,
+      'task-handler-state-machine',
+      {
+        stateMachineName: taskStateMachineName,
+        comment: 'A state machine for task handler',
+        definition: sfnTaskMapState,
+        timeout: cdk.Duration.minutes(15), // Define overall state machine timeout if needed
+        tracingEnabled: true,
+        logs: {
+          destination: taskSfnLogGroup,
+          level: cdk.aws_stepfunctions.LogLevel.ALL, // Log level (ALL, ERROR, or FATAL)
+        },
+      },
+    )
+
+    this.sfnTaskStateMachineArn = new cdk.CfnOutput(
+      this,
+      'sfnTaskStateMachineArn',
+      {
+        value: taskStateMachine.stateMachineArn,
+      },
+    )
 
     // add event sources to lambda event
     lambdaApi.addEventSource(
@@ -879,6 +944,11 @@ export class InfraStack extends cdk.Stack {
       resources: [commandSfnArn],
     })
 
+    const taskSfnPolicy = new cdk.aws_iam.PolicyStatement({
+      actions: ['states:*'],
+      resources: [taskSfnArn], // Access to all resources
+    })
+
     // Attach the policy to the Lambda function's execution role
     lambdaApi.role?.attachInlinePolicy(
       new cdk.aws_iam.Policy(this, 'lambda-event-sfn-policy', {
@@ -890,6 +960,12 @@ export class InfraStack extends cdk.Stack {
       actions: ['ses:SendEmail'],
       resources: ['*'],
     })
+
+    lambdaApi.role?.attachInlinePolicy(
+      new cdk.aws_iam.Policy(this, 'lambda-task-sfn-step-function-policy', {
+        statements: [taskSfnPolicy.copy()],
+      }),
+    )
 
     // Attach the policy to the Lambda function's execution role
     lambdaApi.role?.attachInlinePolicy(

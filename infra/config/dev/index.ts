@@ -3,24 +3,28 @@ import { Config } from '../type'
 
 const config: Config = {
   env: 'dev',
-  appName: '',
+  appName: 'task-sfn-interation-map',
 
   domain: {
-    http: '',
-    appsync: '',
+    http: 'task-sfn-infra.mbc-cqrs-serverless.mbc-net.com',
+    appsync: 'task-sfn-infra-appsync.mbc-cqrs-serverless.mbc-net.com',
   },
 
-  userPoolId: '',
+  userPoolId: 'ap-northeast-1_xlQVMPxtx',
 
   vpc: {
-    id: '',
-    subnetIds: [],
-    securityGroupIds: [],
+    id: 'vpc-03c3b0319b2706b49',
+    subnetIds: [
+      'subnet-0147486eabfc30681',
+      'subnet-0459266bd3e78a8c1',
+      'subnet-01598295459c4d3d9',
+    ],
+    securityGroupIds: ['sg-06d0f5fc2d4225f50'],
   },
   rds: {
-    accountSsmKey: '',
-    endpoint: '',
-    dbName: '',
+    accountSsmKey: '/mbc/cqrs/rds-account',
+    endpoint: 'db.mbc-net.com',
+    dbName: 'dev_cdk_infra',
   },
 
   logLevel: {
@@ -29,8 +33,8 @@ const config: Config = {
     level: 'verbose',
   },
 
-  frontBaseUrl: '',
-  fromEmailAddress: '',
+  frontBaseUrl: 'test-cqrs.mbc-cqrs-serverless.mbc-net.com',
+  fromEmailAddress: 'noreply@mbc-cqrs-serverless.mbc-net.com',
 
   // wafArn: '',
 
