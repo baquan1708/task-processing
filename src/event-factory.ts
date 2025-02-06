@@ -22,19 +22,21 @@ export class CustomEventFactory extends EventFactoryAddedTask {
         }
       }
       return undefined
-    }).filter((event) => !!event)
+    })
+      .filter((event) => !!event)
+      .filter((event) => event.taskEntity.sk.split('#').length < 3)
 
     return [...curEvents, ...taskEvents]
   }
 
-  async transformStepFunction(
-    event: StepFunctionsEvent<any>,
-  ): Promise<IEvent[]> {
-    console.log('@$@#$@#$@', event)
-    if (event.context.StateMachine.Name.includes('employee-import')) {
-      console.log('@$#$@#$@!#$!@$#TASK@#$@#$')
-      return []
-    }
-    return super.transformStepFunction(event)
-  }
+  // async transformStepFunction(
+  //   event: StepFunctionsEvent<any>,
+  // ): Promise<IEvent[]> {
+  //   console.log('@$@#$@#$@', event)
+  //   if (event.context.StateMachine.Name.includes('employee-import')) {
+  //     console.log('@$#$@#$@!#$!@$#TASK@#$@#$')
+  //     return []
+  //   }
+  //   return super.transformStepFunction(event)
+  // }
 }

@@ -39,9 +39,7 @@
           "201": {
             "description": "",
             "content": {
-              "application/json": {
-                "schema": { "$ref": "#/components/schemas/SampleDataEntity" }
-              }
+              "application/json": { "schema": { "type": "object" } }
             }
           }
         },
@@ -267,6 +265,43 @@
           "attributes"
         ]
       },
+      "SampleCommandEntity": {
+        "type": "object",
+        "properties": {
+          "source": { "type": "string" },
+          "isDeleted": { "type": "boolean" },
+          "status": { "type": "string" },
+          "requestId": { "type": "string" },
+          "createdAt": { "format": "date-time", "type": "string" },
+          "updatedAt": { "format": "date-time", "type": "string" },
+          "createdBy": { "type": "string" },
+          "updatedBy": { "type": "string" },
+          "createdIp": { "type": "string" },
+          "updatedIp": { "type": "string" },
+          "pk": { "type": "string" },
+          "sk": { "type": "string" },
+          "id": { "type": "string" },
+          "code": { "type": "string" },
+          "name": { "type": "string" },
+          "version": { "type": "number" },
+          "tenantCode": { "type": "string" },
+          "type": { "type": "string" },
+          "seq": { "type": "number" },
+          "ttl": { "type": "number" },
+          "attributes": { "$ref": "#/components/schemas/SampleAttributes" }
+        },
+        "required": [
+          "pk",
+          "sk",
+          "id",
+          "code",
+          "name",
+          "version",
+          "tenantCode",
+          "type",
+          "attributes"
+        ]
+      },
       "SampleDataEntity": {
         "type": "object",
         "properties": {
@@ -291,43 +326,6 @@
           "seq": { "type": "number" },
           "ttl": { "type": "number" },
           "isDeleted": { "type": "boolean" },
-          "attributes": { "$ref": "#/components/schemas/SampleAttributes" }
-        },
-        "required": [
-          "pk",
-          "sk",
-          "id",
-          "code",
-          "name",
-          "version",
-          "tenantCode",
-          "type",
-          "attributes"
-        ]
-      },
-      "SampleCommandEntity": {
-        "type": "object",
-        "properties": {
-          "source": { "type": "string" },
-          "isDeleted": { "type": "boolean" },
-          "status": { "type": "string" },
-          "requestId": { "type": "string" },
-          "createdAt": { "format": "date-time", "type": "string" },
-          "updatedAt": { "format": "date-time", "type": "string" },
-          "createdBy": { "type": "string" },
-          "updatedBy": { "type": "string" },
-          "createdIp": { "type": "string" },
-          "updatedIp": { "type": "string" },
-          "pk": { "type": "string" },
-          "sk": { "type": "string" },
-          "id": { "type": "string" },
-          "code": { "type": "string" },
-          "name": { "type": "string" },
-          "version": { "type": "number" },
-          "tenantCode": { "type": "string" },
-          "type": { "type": "string" },
-          "seq": { "type": "number" },
-          "ttl": { "type": "number" },
           "attributes": { "$ref": "#/components/schemas/SampleAttributes" }
         },
         "required": [

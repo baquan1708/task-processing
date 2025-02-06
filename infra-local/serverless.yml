@@ -164,38 +164,6 @@ stepFunctions:
   # https://goessner.net/articles/JsonPath/index.html
   # https://docs.aws.amazon.com/step-functions/latest/dg/concepts-input-output-filtering.html
   stateMachines:
-    task:
-      name: task
-      definition:
-        Comment: 'An example of the Amazon States Language using wait states'
-        StartAt: map
-        States:
-          map:
-            Type: Map
-            MaxConcurrency: 2
-            ItemsPath: $
-            Iterator:
-              StartAt: iteration
-              States:
-                iteration:
-                  Type: Task
-                  Resource: arn:aws:states:::lambda:invoke
-                  Parameters:
-                    FunctionName: arn:aws:lambda:ap-northeast-1:101010101010:function:serverless-example-dev-main
-                    Payload:
-                      input.$: $
-                      context.$: $$
-                  Retry:
-                    - ErrorEquals:
-                        - Lambda.ServiceException
-                        - Lambda.AWSLambdaException
-                        - Lambda.SdkClientException
-                      IntervalSeconds: 2
-                      MaxAttempts: 5
-                      BackoffRate: 2
-                  End: true
-            End: true
-            # MaxConcurrency: 2
     command:
       name: command
       definition:
@@ -356,10 +324,10 @@ stepFunctions:
                 BackoffRate: 2
             OutputPath: $.Payload[0][0]
             Next: success
-    employee-import:
-      name: employee-import
+    sfn-task:
+      name: sfn-task
       definition:
-        Comment: 'An example of the Amazon States Language using wait states'
+        Comment: 'Step function for sub task'
         StartAt: map
         States:
           map:
@@ -367,9 +335,9 @@ stepFunctions:
             MaxConcurrency: 2
             ItemsPath: $
             Iterator:
-              StartAt: bulk_upload_employee
+              StartAt: iteration
               States:
-                bulk_upload_employee:
+                iteration:
                   Type: Task
                   Resource: arn:aws:states:::lambda:invoke
                   Parameters:

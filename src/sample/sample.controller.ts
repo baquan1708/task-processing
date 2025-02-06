@@ -41,13 +41,22 @@ export class SampleController {
   async publishCommand(
     @INVOKE_CONTEXT() invokeContext: IInvoke,
     @Body() sampleDto: SampleCommandDto,
-  ): Promise<SampleDataEntity> {
+  ): Promise<any> {
     this.logger.debug('cmd:', sampleDto)
     this.logger.debug('commandService:' + this.commandService.tableName)
-    const item = await this.commandService.publishAsync(sampleDto, {
-      invokeContext,
-    })
-    await this.taskService.createTask(
+    // const item = await this.commandService.publishAsync(sampleDto, {
+    //   invokeContext,
+    // })
+    const item = [
+      { key: 'value1' },
+      { key: 'value2' },
+      { key: 'value3' },
+      { key: 'value4' },
+      { key: 'value5' },
+      { key: 'value6' },
+    ]
+
+    await this.taskService.createStepFunctionTask(
       {
         input: item,
         taskType: 'test',
@@ -55,7 +64,7 @@ export class SampleController {
       },
       { invokeContext },
     )
-    return new SampleDataEntity(item as SampleDataEntity)
+    return item
   }
 
   @Get('command/:pk/:sk')

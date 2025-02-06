@@ -31,17 +31,18 @@ export class TestTaskEventHandler implements IEventHandler<TestTaskEvent> {
       `Begin processing the task: ${event.taskEvent.eventID}`,
       event,
     )
+    // create sub pk, sk for each item in input -> update parent attrs and insert sub task
     // await sleep(3000) // Long running task
     await this.sfnService.startExecution(
       this.sfnTaskArn,
 
       [
-        { pk: 'mbc', sk: '1', attrs: { key: 'value1' } },
-        { pk: 'mbc', sk: '1', attrs: { key: 'value2' } },
-        { pk: 'mbc', sk: '1', attrs: { key: 'value3' } },
-        { pk: 'mbc', sk: '1', attrs: { key: 'value4' } },
-        { pk: 'mbc', sk: '1', attrs: { key: 'value5' } },
-        { pk: 'mbc', sk: '1', attrs: { key: 'value6' } },
+        { key: 'value1' },
+        { key: 'value2' },
+        { key: 'value3' },
+        { key: 'value4' },
+        { key: 'value5' },
+        { key: 'value6' },
       ],
 
       'test' + Math.random() * 10000,

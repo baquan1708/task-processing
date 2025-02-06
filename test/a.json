@@ -1,0 +1,26 @@
+{
+  "code": "01JK7YFWQJ1Y73DQ0ZEWDAGA4B",
+  "updatedBy": "92ca4f68-9ac6-4080-9ae2-2f02a86206a4",
+  "createdIp": "127.0.0.1",
+  "tenantCode": "mbc",
+  "type": "test",
+  "version": 0,
+  "input": [
+    { "sk": "1", "pk": "mbc", "attrs": { "key": "value1" } },
+    { "sk": "1", "pk": "mbc", "attrs": { "key": "value2" } },
+    { "sk": "1", "pk": "mbc", "attrs": { "key": "value3" } },
+    { "sk": "1", "pk": "mbc", "attrs": { "key": "value4" } },
+    { "sk": "1", "pk": "mbc", "attrs": { "key": "value5" } },
+    { "sk": "1", "pk": "mbc", "attrs": { "key": "value6" } }
+  ],
+  "createdAt": "2025-02-04T14:41:12+07:00",
+  "updatedIp": "127.0.0.1",
+  "createdBy": "92ca4f68-9ac6-4080-9ae2-2f02a86206a4",
+  "requestId": "c6af6b4a-4584-4377-9d73-b4f2b2199a63",
+  "sk": "test#01JK7YFWQJ1Y73DQ0ZEWDAGA4B",
+  "name": "test",
+  "id": "TASK#mbc#test#01JK7YFWQJ1Y73DQ0ZEWDAGA4B",
+  "pk": "TASK#mbc",
+  "status": "CREATED",
+  "updatedAt": "2025-02-04T14:41:12+07:00"
+}
