@@ -2,9 +2,9 @@ import {
   ITaskQueueEventFactory,
   TaskQueueEvent,
 } from '@mbc-cqrs-serverless/task'
-import { StepFunctionTaskEvent } from '@mbc-cqrs-serverless/task/dist/event/task.sfn.event'
-import { TestSfnTaskEvent } from 'src/sample/handler/test-sfn-task.event'
-import { TestTaskEvent } from 'src/sample/handler/test-task.event'
+// import { StepFunctionTaskEvent } from '@mbc-cqrs-serverless/task/dist/event/task.sfn.event'
+// import { TestSfnTaskEvent } from 'src/sample/handler/test-sfn-task.event'
+// import { TestTaskEvent } from 'src/sample/handler/test-task.event'
 
 export class TaskQueueEventFactory implements ITaskQueueEventFactory {
   async transformTask(event: TaskQueueEvent): Promise<any[]> {
@@ -25,9 +25,9 @@ export class TaskQueueEventFactory implements ITaskQueueEventFactory {
     return []
   }
 
-  async transformStepFunctionTask(
-    event: StepFunctionTaskEvent,
-  ): Promise<any[]> {
-    return [new TestSfnTaskEvent(event)]
-  }
+  // async transformStepFunctionTask(
+  //   event: StepFunctionTaskEvent,
+  // ): Promise<any[]> {
+  //   return [new TestSfnTaskEvent(event)]
+  // }
 }

@@ -56,14 +56,14 @@ export class SampleController {
       { key: 'value6' },
     ]
 
-    await this.taskService.createStepFunctionTask(
-      {
-        input: item,
-        taskType: 'test',
-        tenantCode: 'mbc',
-      },
-      { invokeContext },
-    )
+    // await this.taskService.createStepFunctionTask(
+    //   {
+    //     input: item,
+    //     taskType: 'test',
+    //     tenantCode: 'mbc',
+    //   },
+    //   { invokeContext },
+    // )
     return item
   }
 
