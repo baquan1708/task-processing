@@ -802,7 +802,7 @@ export class InfraStack extends cdk.Stack {
       this,
       'task-handler-sfn-log',
       {
-        logGroupName: `/aws/vendedlogs/states/${prefix}-task-handler-state-machine-Logs`, // Specify a log group name
+        logGroupName: `/aws/vendedlogs/states/${prefix}task-handler-state-machine-Logs`, // Specify a log group name
         removalPolicy: cdk.RemovalPolicy.DESTROY, // Policy for log group removal
         retention: cdk.aws_logs.RetentionDays.SIX_MONTHS,
       },
