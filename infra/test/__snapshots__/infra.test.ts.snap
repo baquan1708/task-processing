@@ -48,7 +48,7 @@ exports[`snapshot test for InfraStack 1`] = `
       },
     },
     "UserPoolId": {
-      "Value": "ap-northeast-1_xlQVMPxtx",
+      "Value": "ap-northeast-1_NfyqKTjPS",
     },
     "httpdistributiondomain": {
       "Value": {
@@ -202,7 +202,7 @@ exports[`snapshot test for InfraStack 1`] = `
         "SupportedIdentityProviders": [
           "COGNITO",
         ],
-        "UserPoolId": "ap-northeast-1_xlQVMPxtx",
+        "UserPoolId": "ap-northeast-1_NfyqKTjPS",
       },
       "Type": "AWS::Cognito::UserPoolClient",
     },
@@ -632,7 +632,7 @@ exports[`snapshot test for InfraStack 1`] = `
             },
             "APP_NAME": "task-sfn-interation-map",
             "ATTRIBUTE_LIMIT_SIZE": "389120",
-            "COGNITO_USER_POOL_ID": "ap-northeast-1_xlQVMPxtx",
+            "COGNITO_USER_POOL_ID": "ap-northeast-1_NfyqKTjPS",
             "DATABASE_URL": "postgresql:///mbc/cqrs/rds-account@db.mbc-net.com/dev_cdk_infra?schema=public",
             "EVENT_SOURCE_DISABLED": "false",
             "FRONT_BASE_URL": "test-cqrs.mbc-cqrs-serverless.mbc-net.com",
@@ -917,7 +917,7 @@ exports[`snapshot test for InfraStack 1`] = `
                     {
                       "Ref": "AWS::Partition",
                     },
-                    ":cognito-idp:ap-northeast-1:101010101010:userpool/ap-northeast-1_xlQVMPxtx",
+                    ":cognito-idp:ap-northeast-1:101010101010:userpool/ap-northeast-1_NfyqKTjPS",
                   ],
                 ],
               },
@@ -1346,7 +1346,7 @@ exports[`snapshot test for InfraStack 1`] = `
               "Ref": "apigwclientE7D084A5",
             },
           ],
-          "Issuer": "https://cognito-idp.ap-northeast-1.amazonaws.com/ap-northeast-1_xlQVMPxtx",
+          "Issuer": "https://cognito-idp.ap-northeast-1.amazonaws.com/ap-northeast-1_NfyqKTjPS",
         },
         "Name": "CognitoAuthorizer",
       },
@@ -2023,7 +2023,7 @@ exports[`snapshot test for InfraStack 1`] = `
             "AuthenticationType": "AMAZON_COGNITO_USER_POOLS",
             "UserPoolConfig": {
               "AwsRegion": "ap-northeast-1",
-              "UserPoolId": "ap-northeast-1_xlQVMPxtx",
+              "UserPoolId": "ap-northeast-1_NfyqKTjPS",
             },
           },
         ],
