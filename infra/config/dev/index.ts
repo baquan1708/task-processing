@@ -6,8 +6,8 @@ const config: Config = {
   appName: 'task-sfn-interation-map',
 
   domain: {
-    http: 'task-sfn-infra.mbc-cqrs-serverless.mbc-net.com',
-    appsync: 'task-sfn-infra-appsync.mbc-cqrs-serverless.mbc-net.com',
+    http: 'task-sfn-infra.developer-pionero.mbc-dev.com',
+    appsync: 'task-sfn-infra-appsync.developer-pionero.mbc-dev.com',
   },
 
   userPoolId: 'ap-northeast-1_NfyqKTjPS',
@@ -33,8 +33,8 @@ const config: Config = {
     level: 'verbose',
   },
 
-  frontBaseUrl: 'test-cqrs.mbc-cqrs-serverless.mbc-net.com',
-  fromEmailAddress: 'noreply@mbc-cqrs-serverless.mbc-net.com',
+  frontBaseUrl: 'test-cqrs.developer-pionero.mbc-dev.com',
+  fromEmailAddress: 'noreply@developer-pionero.mbc-dev.com',
 
   // wafArn: '',
 
