@@ -146,8 +146,8 @@ exports[`snapshot test for InfraStack 1`] = `
     },
     "AppSyncCnameRecord408D9525": {
       "Properties": {
-        "HostedZoneId": "Z083753814XLAICIY5OHU",
-        "Name": "task-sfn-infra-appsync.mbc-cqrs-serverless.mbc-net.com.",
+        "HostedZoneId": "Z07014542L73WTE1YO27B",
+        "Name": "task-sfn-infra-appsync.developer-pionero.mbc-dev.com.",
         "ResourceRecords": [
           {
             "Fn::GetAtt": [
@@ -513,7 +513,7 @@ exports[`snapshot test for InfraStack 1`] = `
       "Properties": {
         "DistributionConfig": {
           "Aliases": [
-            "task-sfn-infra.mbc-cqrs-serverless.mbc-net.com",
+            "task-sfn-infra.developer-pionero.mbc-dev.com",
           ],
           "DefaultCacheBehavior": {
             "AllowedMethods": [
@@ -574,7 +574,7 @@ exports[`snapshot test for InfraStack 1`] = `
             },
           },
           "ViewerCertificate": {
-            "AcmCertificateArn": "arn:aws:acm:us-east-1:058264278704:certificate/f8dafb25-8cf9-4de2-8448-0be72bc9d738",
+            "AcmCertificateArn": "arn:aws:acm:us-east-1:465316005105:certificate/495946ea-1231-47cb-b09d-0ae7305866fb",
             "MinimumProtocolVersion": "TLSv1.2_2021",
             "SslSupportMethod": "sni-only",
           },
@@ -594,8 +594,8 @@ exports[`snapshot test for InfraStack 1`] = `
     },
     "httpdistributionarecord0FBAAC08": {
       "Properties": {
-        "HostedZoneId": "Z083753814XLAICIY5OHU",
-        "Name": "task-sfn-infra.mbc-cqrs-serverless.mbc-net.com.",
+        "HostedZoneId": "Z07014542L73WTE1YO27B",
+        "Name": "task-sfn-infra.developer-pionero.mbc-dev.com.",
         "ResourceRecords": [
           {
             "Fn::GetAtt": [
@@ -635,7 +635,7 @@ exports[`snapshot test for InfraStack 1`] = `
             "COGNITO_USER_POOL_ID": "ap-northeast-1_NfyqKTjPS",
             "DATABASE_URL": "postgresql:///mbc/cqrs/rds-account@db.mbc-net.com/dev_cdk_infra?schema=public",
             "EVENT_SOURCE_DISABLED": "false",
-            "FRONT_BASE_URL": "test-cqrs.mbc-cqrs-serverless.mbc-net.com",
+            "FRONT_BASE_URL": "test-cqrs.developer-pionero.mbc-dev.com",
             "LOG_LEVEL": "verbose",
             "NODE_ENV": "dev",
             "NODE_OPTIONS": "--enable-source-maps",
@@ -645,7 +645,7 @@ exports[`snapshot test for InfraStack 1`] = `
             "S3_PUBLIC_BUCKET_NAME": {
               "Ref": "publicbucket0D82CFFB",
             },
-            "SES_FROM_EMAIL": "noreply@mbc-cqrs-serverless.mbc-net.com",
+            "SES_FROM_EMAIL": "noreply@developer-pionero.mbc-dev.com",
             "SFN_COMMAND_ARN": "arn:aws:states:ap-northeast-1:101010101010:stateMachine:dev-task-sfn-interation-map-command-handler",
             "SFN_TASK_ARN": "arn:aws:states:ap-northeast-1:101010101010:stateMachine:dev-task-sfn-interation-map-sfn-task-handler",
             "SNS_ALARM_TOPIC_ARN": {
@@ -2069,13 +2069,13 @@ exports[`snapshot test for InfraStack 1`] = `
             "ApiId",
           ],
         },
-        "DomainName": "task-sfn-infra-appsync.mbc-cqrs-serverless.mbc-net.com",
+        "DomainName": "task-sfn-infra-appsync.developer-pionero.mbc-dev.com",
       },
       "Type": "AWS::AppSync::DomainNameApiAssociation",
     },
     "realtimeDomainName01674B94": {
       "Properties": {
-        "CertificateArn": "arn:aws:acm:us-east-1:058264278704:certificate/f8dafb25-8cf9-4de2-8448-0be72bc9d738",
+        "CertificateArn": "arn:aws:acm:us-east-1:465316005105:certificate/495946ea-1231-47cb-b09d-0ae7305866fb",
         "Description": {
           "Fn::Join": [
             "",
@@ -2090,7 +2090,7 @@ exports[`snapshot test for InfraStack 1`] = `
             ],
           ],
         },
-        "DomainName": "task-sfn-infra-appsync.mbc-cqrs-serverless.mbc-net.com",
+        "DomainName": "task-sfn-infra-appsync.developer-pionero.mbc-dev.com",
       },
       "Type": "AWS::AppSync::DomainName",
     },
