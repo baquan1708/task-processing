@@ -2286,7 +2286,7 @@ schema {
     "taskhandlersfnlogB2666A7A": {
       "DeletionPolicy": "Delete",
       "Properties": {
-        "LogGroupName": "/aws/vendedlogs/states/dev-task-sfn-interation-map--task-handler-state-machine-Logs",
+        "LogGroupName": "/aws/vendedlogs/states/dev-task-sfn-interation-map-task-handler-state-machine-Logs",
         "RetentionInDays": 180,
         "Tags": [
           {
