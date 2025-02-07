@@ -1,10 +1,10 @@
 @endpoint = http://localhost:3000
-@cognitoEndpoint = http://localhost:9229
-@clientId = dnk8y7ii3wled35p3lw0l2cd7
+@cognitoEndpoint = https://cognito-idp.ap-northeast-1.amazonaws.com/
+@clientId = 35osoku2enj7t2bmrd41fjcbit
 # account's username 
-@username = admin2
+@username = e774caf8-0051-70e2-5f63-272f041b56a9
 # account's password
-@password = admin1234
+@password = Abcd@1234
 # account's email
 @email = admin2@example.com
 

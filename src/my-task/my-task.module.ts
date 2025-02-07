@@ -1,6 +1,6 @@
 import { TaskModule } from '@mbc-cqrs-serverless/task'
 import { Module } from '@nestjs/common'
-// import { TestSfnTaskEventHandler } from 'src/sample/handler/test-sfn-task.handler'
+import { TestSfnTaskEventHandler } from 'src/sample/handler/test-sfn-task.handler'
 
 import { TaskQueueEventFactory } from './task-queue-event-factory'
 
@@ -11,7 +11,7 @@ import { TaskQueueEventFactory } from './task-queue-event-factory'
     }),
   ],
   providers: [
-    // TestSfnTaskEventHandler
+    TestSfnTaskEventHandler
   ],
   exports: [TaskModule],
 })
