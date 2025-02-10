@@ -864,6 +864,22 @@ exports[`snapshot test for InfraStack 1`] = `
               },
             },
             {
+              "Action": [
+                "sqs:ReceiveMessage",
+                "sqs:ChangeMessageVisibility",
+                "sqs:GetQueueUrl",
+                "sqs:DeleteMessage",
+                "sqs:GetQueueAttributes",
+              ],
+              "Effect": "Allow",
+              "Resource": {
+                "Fn::GetAtt": [
+                  "subtaskstatussqs337C4C1A",
+                  "Arn",
+                ],
+              },
+            },
+            {
               "Action": "dynamodb:ListStreams",
               "Effect": "Allow",
               "Resource": "*",
@@ -1079,6 +1095,31 @@ exports[`snapshot test for InfraStack 1`] = `
         "EventSourceArn": {
           "Fn::GetAtt": [
             "notifysqsEC095A61",
+            "Arn",
+          ],
+        },
+        "FunctionName": {
+          "Ref": "lambdaapi893CD94E",
+        },
+        "Tags": [
+          {
+            "Key": "env",
+            "Value": "dev",
+          },
+          {
+            "Key": "name",
+            "Value": "task-sfn-interation-map",
+          },
+        ],
+      },
+      "Type": "AWS::Lambda::EventSourceMapping",
+    },
+    "lambdaapiSqsEventSourceTestInfraStacksubtaskstatussqs6A461140CF17FDD8": {
+      "Properties": {
+        "BatchSize": 1,
+        "EventSourceArn": {
+          "Fn::GetAtt": [
+            "subtaskstatussqs337C4C1A",
             "Arn",
           ],
         },
@@ -2210,6 +2251,83 @@ schema {
         ],
       },
       "Type": "AWS::IAM::Policy",
+    },
+    "subtaskstatussqs337C4C1A": {
+      "DeletionPolicy": "Delete",
+      "Properties": {
+        "QueueName": "dev-task-sfn-interation-map-sub-task-status-queue",
+        "Tags": [
+          {
+            "Key": "env",
+            "Value": "dev",
+          },
+          {
+            "Key": "name",
+            "Value": "task-sfn-interation-map",
+          },
+        ],
+      },
+      "Type": "AWS::SQS::Queue",
+      "UpdateReplacePolicy": "Delete",
+    },
+    "subtaskstatussqsPolicy727EA743": {
+      "Properties": {
+        "PolicyDocument": {
+          "Statement": [
+            {
+              "Action": "sqs:SendMessage",
+              "Condition": {
+                "ArnEquals": {
+                  "aws:SourceArn": {
+                    "Ref": "mainsnsC0381B34",
+                  },
+                },
+              },
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "sns.amazonaws.com",
+              },
+              "Resource": {
+                "Fn::GetAtt": [
+                  "subtaskstatussqs337C4C1A",
+                  "Arn",
+                ],
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "Queues": [
+          {
+            "Ref": "subtaskstatussqs337C4C1A",
+          },
+        ],
+      },
+      "Type": "AWS::SQS::QueuePolicy",
+    },
+    "subtaskstatussqsTestInfraStackmainsnsA010224C101218D4": {
+      "DependsOn": [
+        "subtaskstatussqsPolicy727EA743",
+      ],
+      "Properties": {
+        "Endpoint": {
+          "Fn::GetAtt": [
+            "subtaskstatussqs337C4C1A",
+            "Arn",
+          ],
+        },
+        "FilterPolicy": {
+          "action": [
+            "sub-task-status",
+          ],
+        },
+        "Protocol": "sqs",
+        "RawMessageDelivery": true,
+        "TopicArn": {
+          "Ref": "mainsnsC0381B34",
+        },
+      },
+      "Type": "AWS::SNS::Subscription",
     },
     "taskdeadlettersqs91D16094": {
       "DeletionPolicy": "Delete",

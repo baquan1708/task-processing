@@ -41,6 +41,11 @@ custom:
             }
         queue: http://localhost:9324/101010101010/notification-queue
       - topic:
+          topicName: CqrsSnsTopic
+          rawMessageDelivery: 'true'
+          filterPolicy: { 'action': ['sub-task-status'] }
+        queue: http://localhost:9324/101010101010/sub-task-status-queue
+      - topic:
           topicName: AlarmSnsTopic
           rawMessageDelivery: 'true'
         queue: http://localhost:9324/101010101010/alarm-queue
@@ -141,6 +146,11 @@ functions:
           arn:
             Fn::GetAtt:
               - TaskActionQueue
+              - Arn
+      - sqs:
+          arn:
+            Fn::GetAtt:
+              - SubTaskActionQueue
               - Arn
       - sqs:
           arn:
@@ -362,6 +372,10 @@ resources:
       Type: AWS::SQS::Queue
       Properties:
         QueueName: task-action-queue
+    SubTaskActionQueue:
+      Type: AWS::SQS::Queue
+      Properties:
+        QueueName: sub-task-status-queue
     NotificationQueue:
       Type: AWS::SQS::Queue
       Properties:
