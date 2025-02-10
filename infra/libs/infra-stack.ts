@@ -115,6 +115,14 @@ export class InfraStack extends cdk.Stack {
       },
     })
 
+    const subTaskStatusSqs = new cdk.aws_sqs.Queue(
+      this,
+      'sub-task-status-sqs',
+      {
+        queueName: prefix + 'sub-task-status-queue',
+      },
+    )
+
     alarmSns.addSubscription(
       new cdk.aws_sns_subscriptions.SqsSubscription(taskDlSqs, {
         rawMessageDelivery: true,
@@ -140,6 +148,17 @@ export class InfraStack extends cdk.Stack {
         filterPolicy: {
           action: cdk.aws_sns.SubscriptionFilter.stringFilter({
             allowlist: ['command-status', 'task-status'],
+          }),
+        },
+      }),
+    )
+
+    mainSns.addSubscription(
+      new cdk.aws_sns_subscriptions.SqsSubscription(subTaskStatusSqs, {
+        rawMessageDelivery: true,
+        filterPolicy: {
+          action: cdk.aws_sns.SubscriptionFilter.stringFilter({
+            allowlist: ['sub-task-status'],
           }),
         },
       }),
@@ -840,6 +859,11 @@ export class InfraStack extends cdk.Stack {
     )
     lambdaApi.addEventSource(
       new cdk.aws_lambda_event_sources.SqsEventSource(notifySqs, {
+        batchSize: 1,
+      }),
+    )
+    lambdaApi.addEventSource(
+      new cdk.aws_lambda_event_sources.SqsEventSource(subTaskStatusSqs, {
         batchSize: 1,
       }),
     )
