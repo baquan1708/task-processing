@@ -367,7 +367,7 @@ export class InfraStack extends cdk.Stack {
       code: cdk.aws_lambda.Code.fromAsset(appPath),
       handler: 'main.handler',
       runtime: cdk.aws_lambda.Runtime.NODEJS_LATEST,
-      timeout: cdk.Duration.seconds(360),
+      timeout: cdk.Duration.seconds(60),
       memorySize: 512,
       tracing: cdk.aws_lambda.Tracing.ACTIVE,
       loggingFormat: cdk.aws_lambda.LoggingFormat.JSON,
